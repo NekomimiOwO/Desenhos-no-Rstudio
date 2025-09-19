@@ -4,10 +4,13 @@ a=function(){
   ver_mar=ifelse(ver_mar == 1,1,NA)
   ver_ceu=ifelse(ver_ceu == 1,1,NA)
   ver_praia=ifelse(ver_praia == 1,1,NA)
+  if(Slow_motion ==T){
+    ww=1
+  }
   for(w in 1:ww){
     { padrao=c()
     
-    colfunc <- colorRampPalette(c('blue','darkblue'))
+    colfunc <- colorRampPalette(color_vector)
     cor <- colfunc(n*1.5)
     
     plot(NULL,ylim=c(-y,y),xlim=c(0+0.05*n2,n2-0.05*n2),las=1,ylab="",xlab="",main=paste(w,"passos de",ww,"\n","Largura = ",n2,"Altura = ",y))
@@ -22,12 +25,13 @@ a=function(){
         if(j==1){ 
           new=-200
         }else{ 
-          new=sample((-200*y/400):(200*y/400),1,replace = F)}
-      }else{
+          new=sample((-limits*y/400):(limits*y/400),1,replace = F)}
+          }else{
         for(zeus in 1:length(ini)){ 
           padrao[zeus]=ini[[zeus]][1]}
         
       }
+      
       if(w>1){ 
         new=padrao[j]}
       ini[[j]]=1
@@ -42,7 +46,11 @@ a=function(){
           ini[[j]][i+1]=ini[[j]][i+1]+1
         }
       }
-      #lines(ini[[j]])
+      if(Slow_motion ==T & i%%passos==0){
+        Sys.sleep(Slow_motion_mod*0.5)
+        
+      }
+      lines(ini[[j]])
     }
     
     
@@ -53,8 +61,6 @@ a=function(){
     }
     ll=0
     minimo=sort(num)
-    colfunc <- colorRampPalette(c('white','blue'))
-    rr=colfunc(10)
     
     for (j in 1:(length(ini)-1)) {
       pos=which(num==minimo[1])[1]
@@ -67,6 +73,9 @@ a=function(){
       
       
       for (i in 1:(n2/pr)) {
+        if(Slow_motion ==T & i%%passos==0){
+          Sys.sleep(Slow_motion_mod)
+        }
         if(i==1){
           polygon(c(i*pr-pr,i*pr-pr,i*pr+pr,i*pr+pr*2),c(ini[[pos]][i*pr]-20,ini[[pos2]][i*pr+pr]+20,ini[[pos2]][i*pr+pr]+20,ini[[pos]][i*pr+pr]-20),col=cor[j],border = ver_mar)
         }
@@ -78,7 +87,14 @@ a=function(){
       }
       
       if(ll==0){
+        if(Slow_motion ==T & i%%passos==0){
+          Sys.sleep(Slow_motion_mod)
+        }
         for (i in 1:(n2/pr)) {
+          if(Slow_motion ==T & i%%passos==0){
+            Sys.sleep(Slow_motion_mod)
+            
+          }
           if(i==1){ 
             polygon(c(i*pr-pr,i*pr-pr,i*pr+pr,i*pr+pr),c(-y-100,ini[[ponto0]][i*pr]+20,ini[[ponto0]][i*pr]+20,-y-100),col='yellow2',border = ver_praia)
           }else{
@@ -89,7 +105,11 @@ a=function(){
       }
       
       if(j==length(ini)-1){
+        
         for (i in 1:(n2/pr)) {
+          if(Slow_motion ==T & i%%passos==0){
+            Sys.sleep(Slow_motion_mod)
+          }
           if(i==1){ 
             polygon(c(i*pr-pr,i*pr-pr,i*pr+pr,i*pr+pr),c(ini[[pos2]][i*pr],y+100,y+100,ini[[pos2]][i*pr]),col = "deepskyblue",border =ver_ceu)
           }
@@ -100,28 +120,43 @@ a=function(){
       }
       minimo=minimo[-1]
     }
+    if(Slow_motion ==T){
+      Sys.sleep(Slow_motion_mod)
+    }
     }
     ##########################################################-> 
     
     
-    
+   if(nuvens==1){  
+     
+     if(Slow_motion ==T){
+       Sys.sleep(Slow_motion_mod)
+     }
     symbols(x=n2/2500*1070+w*15-n2/2500*1200,y=320*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1070+w*15-n2/2500*1200,y=290*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1000+w*15-n2/2500*1200,y=270*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1170+w*15-n2/2500*1200,y=270*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     
     
+    if(Slow_motion ==T){
+      Sys.sleep(Slow_motion_mod)
+    }
     symbols(x=n2/2500*1070+w*5,y=320*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1070+w*5,y=290*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1000+w*5,y=270*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1170+w*5,y=270*y/400,circles =n2/2500*100,bg='white',add=T,inches = F,fg = "white")
     
     
+    if(Slow_motion ==T){
+      Sys.sleep(Slow_motion_mod)
+    }
     
     symbols(x=n2/2500*1070+n2/2500*1000+w*9,y=320+50*y/400,circles =n2/2500*90,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1070+n2/2500*1000+w*9,y=290+50*y/400,circles =n2/2500*90,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1000+n2/2500*1000+w*9,y=270+50*y/400,circles =n2/2500*90,bg='white',add=T,inches = F,fg = "white")
     symbols(x=n2/2500*1170+n2/2500*1000+w*9,y=270+50*y/400,circles =n2/2500*90,bg='white',add=T,inches = F,fg = "white")
+  }
+    
     if(sol==1){ 
       # cx e cy = centro x e y
       # r = raio base 
@@ -129,30 +164,40 @@ a=function(){
       # n2 e yscale: fatores de escala x e y 
       cir=function(cx,cy,r,a){
         xx = cx + r *n2/2200* cos(a)
-        yy = cy + r *y/350* sin(a)
+        yy = cy + r *y/440* sin(a)
         return(c(xx,yy))
       }
-      r=200
+      r=130
       mudanca=w/30
       for (z in seq(1,-5,-0.2)) {
         ang=z
-        c1=cir(0,y,r,ang+mudanca);c2=cir(0,y,350,ang+mudanca)
-        c1p=cir(0,y,r,ang-0.1+mudanca);c2p=cir(0,y,350,ang-0.1+mudanca)
+        
+        
+        c1=cir(n2*0.1666667,y-y/4,r,ang+mudanca);
+        c2=cir(n2*0.1666667,y-y/4,250,ang+mudanca)
+        
+        c1p=cir(n2*0.1666667,y-y/4,r,ang-0.1+mudanca);
+        c2p=cir(n2*0.1666667,y-y/4,250,ang-0.1+mudanca)
         
         polygon(x=c(c1p[1],c2p[1],c2[1],c1[1]),y=c(c1p[2],c2p[2],c2[2],c1[2]),col='yellow')
         
+        if(Slow_motion ==T & z %in% c(0,-1,-2,-3,-4,-5)){
+          Sys.sleep(Slow_motion_mod)
+        
+        }
       }
       
-      symbols(x=0,y=y,circles = n2/2500*200,bg='yellow',add = T,inches=F)
+      symbols(x=n2*0.1666667,y=y-y/4,circles = n2/4000*200,bg='yellow',add = T,inches=F)
     }
     posx=n2-(10*(w-1))+30
     surf=mean((-200*y/400):(200*y/400))
     pposy=seq(surf,50,length.out=4)
     posy=rep(pposy,rev(pposy),n2)[w]
     
-    
+
     polygon(x=c(posx-10,posx,posx+10,posx),y=c(posy-40,posy-10-40,posy-40,posy+10-40),col='white')
-    symbols(posx,posy,circles = 1.3,inches = F,add=T,bg='green')
+
+      symbols(posx,posy,circles = 1.3,inches = F,add=T,bg='green')
     lines(c(posx,posx),c(posy,posy-20),col='green')
     lines(c(posx,posx+rep(c(2:4,4:3),n2)[w]),c(posy-10,posy+5),col='green')
     lines(c(posx,posx-rep(c(2:4,4:3),n2)[w]),c(posy-10,posy+5),col='green')
@@ -174,21 +219,29 @@ a=function(){
 
 
 {
-  pr=10                #resolução , tem que ser >=1 e quanto maior, menor a resolução
+  pr=5                #resolução , tem que ser >=1 e quanto maior, menor a resolução
   n=15                  #numero de linhas
-  n2=600              #tamanho x
-  tt=0.5                 #segundos de espera/intervalo
-  ww=20                #quantidade de quadros, ao colocar maior que aprox 10 verá uma animaçãozinha 
-  seed=1               #seed
+  n2=1000              #tamanho x
+  tt=0.3                 #segundos de espera/intervalo
+  ww=1                #quantidade de quadros, ao colocar maior que aprox 10 verá uma animaçãozinha 
+  seed=2               #seed
   y=500                #altura y
-  loop=1               #variavel de controle(não alterar)
-  limitesup=100          #limite das areas superior(positivo)
-  limiteinf=50           #limite inferior das áreas(negativo)
+  limits = 200          #variavel de amplitude do mar
+  limitesup=100          #limite das areas superior(positivo) mar
+  limiteinf=100           #limite inferior das áreas(negativo) mar
   sol=1             #1 com sol ; 0 sem sol
-  ver_mar=0        #variaveis para ver outlines 1=sim , !=1 = não
+  nuvens =1          #1 com nuvens/ 0 sem nuvens
+  ver_mar=0       #variaveis para ver outlines 1=sim , !=1 = não
   ver_praia=0
   ver_ceu=0
-}
+  Slow_motion = T # geração em camera lenta se ativo ira modificar ww para 1
+  Slow_motion_mod = 0.7 #tempo entre cada passo.
+  passos = 100 #densidade de passos, quanto menor maior passos.
+  
+  color_vector = c('dodgerblue2','blue','darkblue','black','black') #vetor de transição de cores do mar
+  }
+
+
 
 a()
 
